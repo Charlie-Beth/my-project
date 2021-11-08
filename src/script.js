@@ -1,18 +1,18 @@
+function searchTempertature(response) {
+  let temperature = Math.round(response.data.main.temp);
+  document.querySelector("#temp").innerHTML = Math.round(
+    response.data.main.temp
+  );
+  document.querySelector("#city").innerHTML = response.data.name;
+}
 
+function searchCity(city) {
+  axios
+    .get(`${apiUrl}${city}&appid=${apiKey}&units=${units}`)
+    .then(searchTempertature);
+}
 
-function searchTempertature( response){
-   let temperature = Math.round(response.data.main.temp);
-   document.querySelector("#temp").innerHTML = (Math.round(response.data.main.temp));
-   document.querySelector("#city").innerHTML = response.data.name;
-  }
-
-  function searchCity(city){
-    axios
-      .get(`${apiUrl}${city}&appid=${apiKey}&units=${units}`).then(searchTempertature);
-  }
-
-
-function getCity(event){
+function getCity(event) {
   event.preventDefault();
   let city = document.querySelector("#city-input").value;
   searchCity(city);
@@ -27,14 +27,19 @@ search.addEventListener("submit", getCity);
 
 searchCity("London");
 
-function showTemperature (response){
-   document.querySelector("#temp").innerHTML = (Math.round(response.data.main.temp));
-   document.querySelector("#city").innerHTML = response.data.name;
+function showTemperature(response) {
+  document.querySelector("#temp").innerHTML = Math.round(
+    response.data.main.temp
+  );
+  document.querySelector("#city").innerHTML = response.data.name;
 }
 
-function getLocation(position){
-   axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=${units}`
-   ).then(showTemperature);
+function getLocation(position) {
+  axios
+    .get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=${units}`
+    )
+    .then(showTemperature);
 }
 
 function getCurrentLocation(event) {
@@ -54,3 +59,25 @@ let days = [
   "Thursday",
   "Friday",
   "Saturday",
+];
+let currentDay = days[now.getDay()];
+let currentHour = now.getHours();
+let currentMinutes = now.getMinutes();
+let todayDate = document.querySelector("#date");
+todayDate.innerHTML = `${currentDay} ${currentHour}:${currentMinutes}`;
+
+function selectCelsius(event) {
+  event.preventDefault();
+  document.querySelector("#temp").innerHTML = "16";
+}
+
+let celsius = document.querySelector("#celsius");
+celsius.addEventListener("click", selectCelsius);
+
+function selectfahrenheit(event) {
+  event.preventDefault();
+  document.querySelector("#temp").innerHTML = "61";
+}
+
+let fahrenheit = document.querySelector("#fahrenheit");
+fahrenheit.addEventListener("click", selectfahrenheit);
